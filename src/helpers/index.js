@@ -1,3 +1,3 @@
-import { ref } from 'vue'
+import { ref } from 'vue';
 
-export const leftDrawerOpen = ref(true)
+export const leftDrawerOpen = ref(true);

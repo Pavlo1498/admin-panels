@@ -1,17 +1,17 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted } from 'vue';
 
 import { checkTheme } from './helpers/theme';
 
 onMounted(() => {
-  checkTheme()
+  checkTheme();
 });
 </script>
 
 <template>
-  <div class=''>
-    <router-view />
-  </div>
+    <div class=''>
+        <router-view />
+    </div>
 </template>
 
 <style lang='scss' scoped></style>
