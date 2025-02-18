@@ -15,7 +15,7 @@ import WdTheme from 'src/widgets/WdTheme.vue';
                 dense
                 flat
                 round
-                icon="menu"
+                :icon="leftDrawerOpen ? 'menu_open' : 'menu'"
                 @click="leftDrawerOpen = !leftDrawerOpen"
             />
 
@@ -24,5 +24,3 @@ import WdTheme from 'src/widgets/WdTheme.vue';
         </q-toolbar>
     </q-header>
 </template>
-
-<style lang='scss' scoped></style>

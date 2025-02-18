@@ -1,11 +1,15 @@
 <script setup>
+import { useRouter } from 'vue-router';
+
 import { leftDrawerOpen } from 'src/helpers';
+
+const router = useRouter();
 
 const menuLinks = [
   {
     path: 'lists',
     name: 'Список нейросетей',
-    icon: 'table_rows',
+    icon: 'table_chart',
     id: 1
   },
   {
@@ -25,12 +29,13 @@ const menuLinks = [
         side="left"
         bordered
     >
-        <q-list bordered>
+        <q-list>
             <q-item
                 v-for="link in menuLinks"
                 :key="link.id"
                 v-ripple
                 clickable
+                @click="router.push(link.path)"
             >
                 <q-item-section avatar>
                     <q-icon color="primary" :name="link.icon" />
@@ -43,6 +48,7 @@ const menuLinks = [
 
 <style lang='scss'>
 .q-drawer {
+  /* stylelint-disable-next-line declaration-no-important */
   background: var(--g-color-5) !important;
 }
 </style>

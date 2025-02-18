@@ -2,13 +2,16 @@ const routes = [
   {
     path: '/',
     component: () => import('pages/AdminPages.vue'),
+    redirect: {
+        path: 'lists'
+    },
     children: [
       {
-        path: '',
+        path: 'create',
         component: () => import('pages/admin/AdminCreateNeuron.vue')
       },
       {
-        path: '',
+        path: 'lists',
         component: () => import('pages/admin/AdminListsNeuron.vue')
       }
     ]
