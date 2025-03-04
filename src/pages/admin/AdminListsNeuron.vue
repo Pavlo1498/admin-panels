@@ -1,43 +1,15 @@
 <script setup>
-import axios from 'axios';
+import { storeToRefs } from 'pinia';
+import { onMounted } from 'vue';
+
+import { listsNeuronStore } from 'stores/listsNeuronStore.js';
+import { columns } from 'src/libs/tableLibs';
 
 import WdWrapper from 'src/widgets/WdWrapper.vue';
 
-import { columns } from 'src/libs/tableLibs';
-import { ref, onMounted } from 'vue';
+const { rows, loadData } = storeToRefs(listsNeuronStore());
+const { getRows } = listsNeuronStore();
 
-const rows = ref([]);
-
-const getRows = async () => {
-    try {
-        //
-        const resp = await axios({
-            method: 'get',
-            url: 'https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons',
-        })
-
-        rows.value = resp.data
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-const addNeuron = async() => {
-    try {
-        //
-        await axios({
-            method: 'post',
-            url: 'https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons',
-            data: {
-                id: '11',
-            }
-        })
-
-        getRows()
-    } catch (error) {
-        console.log(error);
-    }
-}
 onMounted(() => {
     getRows()
 });
@@ -50,9 +22,39 @@ onMounted(() => {
             bordered
             title="Нейросети"
             :rows="rows"
+            :loading="loadData"
             :columns="columns"
             row-key="id"
-        />
+        >
+        <template v-slot:loading>
+            <q-inner-loading showing color="primary" />
+        </template>
+        <template v-slot:body="props">
+            <q-tr :props="props">
+                <q-td key="id" :props="props">
+                    <span>{{ props.row.id }}</span>
+                </q-td>
+                <q-td key="active" :props="props">
+                    <q-toggle
+                        v-model="props.row.active"
+                        color="green"
+                    />
+                </q-td>
+                <q-td key="name" :props="props">
+                    <span>{{ props.row.name }}</span>
+                </q-td>
+                <q-td key="chapter" :props="props">
+                    <span>{{ props.row.chapter }}</span>
+                </q-td>
+                <q-td key="dateEdit" :props="props">
+                    <span>{{ props.row.dateEdit }}</span>
+                </q-td>
+                <q-td key="createdAt" :props="props">
+                    <span>{{ props.row.createdAt }}</span>
+                </q-td>
+            </q-tr>
+        </template>
+    </q-table>
         <div @click="addNeuron()">add</div>
     </WdWrapper>
 </template>

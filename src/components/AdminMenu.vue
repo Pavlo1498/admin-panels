@@ -40,13 +40,19 @@ const menuLinks = [
                 <q-item-section avatar>
                     <q-icon color="primary" :name="link.icon" />
                 </q-item-section>
-                <q-item-section>{{ link.name }}</q-item-section>
+                <q-item-section>
+                    {{ link.name }}
+                </q-item-section>
             </q-item>
         </q-list>
     </q-drawer>
 </template>
 
 <style lang='scss'>
+.q-item__section--avatar {
+    min-width: auto;
+}
+
 .q-drawer {
   /* stylelint-disable-next-line declaration-no-important */
   background: var(--g-color-5) !important;
