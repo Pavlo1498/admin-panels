@@ -1,14 +1,19 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { listsNeuronStore } from 'stores/listsNeuronStore.js';
+import { editNeuronStore } from 'stores/editNeuronStore.js';
 import { columns } from 'src/libs/tableLibs';
 
 import WdWrapper from 'src/widgets/WdWrapper.vue';
 
 const { rows, loadData } = storeToRefs(listsNeuronStore());
+const { editNeuron } = storeToRefs(editNeuronStore());
 const { getRows } = listsNeuronStore();
+
+const router = useRouter();
 
 onMounted(() => {
     getRows()
@@ -52,9 +57,19 @@ onMounted(() => {
                 <q-td key="createdAt" :props="props">
                     <span>{{ props.row.createdAt }}</span>
                 </q-td>
+                <q-td key="edit" :props="props">
+                    <div
+                        style="cursor: pointer"
+                        @click="editNeuron = props.row, router.push('edit-neuron')"
+                    >
+                        <q-icon
+                            name="edit"
+                            size="16px"
+                        />
+                    </div>
+                </q-td>
             </q-tr>
         </template>
     </q-table>
-        <div @click="addNeuron()">add</div>
     </WdWrapper>
 </template>

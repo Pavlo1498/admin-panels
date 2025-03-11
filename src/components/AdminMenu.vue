@@ -1,9 +1,10 @@
 <script setup>
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 import { leftDrawerOpen } from 'src/helpers';
 
 const router = useRouter();
+const route = useRoute();
 
 const menuLinks = [
   {
@@ -34,6 +35,8 @@ const menuLinks = [
                 v-for="link in menuLinks"
                 :key="link.id"
                 v-ripple
+                active-class="my-menu-link"
+                :active="link.path === route.name"
                 clickable
                 @click="router.push(link.path)"
             >
@@ -56,5 +59,9 @@ const menuLinks = [
 .q-drawer {
   /* stylelint-disable-next-line declaration-no-important */
   background: var(--g-color-5) !important;
+}
+
+.my-menu-link {
+  background: var(--g-color-20);
 }
 </style>

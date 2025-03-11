@@ -35,4 +35,10 @@ export const columns = [
         label: 'Дата создания',
         field: 'createdAt',
     },
+    {
+        name: 'edit',
+        align: 'center',
+        label: 'Действия',
+        field: 'edit',
+    },
   ]
