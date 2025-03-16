@@ -43,6 +43,3 @@ onMounted(() => {
     />
 </WdWrapper>
 </template>
-
-<style lang='scss'>
-</style>

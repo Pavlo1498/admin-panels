@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
+import { date } from 'quasar'
 
 import { listsNeuronStore } from 'stores/listsNeuronStore.js';
 import { editNeuronStore } from 'stores/editNeuronStore.js';
@@ -11,7 +12,7 @@ import WdWrapper from 'src/widgets/WdWrapper.vue';
 
 const { rows, loadData } = storeToRefs(listsNeuronStore());
 const { editNeuron } = storeToRefs(editNeuronStore());
-const { getRows } = listsNeuronStore();
+const { getRows, delNeuron } = listsNeuronStore();
 
 const router = useRouter();
 
@@ -51,20 +52,25 @@ onMounted(() => {
                 <q-td key="chapter" :props="props">
                     <span>{{ props.row.chapter }}</span>
                 </q-td>
-                <q-td key="dateEdit" :props="props">
-                    <span>{{ props.row.dateEdit }}</span>
-                </q-td>
                 <q-td key="createdAt" :props="props">
-                    <span>{{ props.row.createdAt }}</span>
+                    <span>{{ date.formatDate(props.row.createdAt, 'DD.MM.YYYY hh:mm:ss') }}</span>
+                </q-td>
+                <q-td key="dateEdit" :props="props">
+                    <span>{{ date.formatDate(props.row.dateEdit, 'DD.MM.YYYY hh:mm:ss') }}</span>
                 </q-td>
                 <q-td key="edit" :props="props">
-                    <div
-                        style="cursor: pointer"
-                        @click="editNeuron = props.row, router.push('edit-neuron')"
-                    >
+                    <div class="flex q-gutter-x-sm justify-center">
                         <q-icon
+                            class="cursor-pointer"
                             name="edit"
                             size="16px"
+                            @click="editNeuron = props.row, router.push('edit-neuron')"
+                        />
+                        <q-icon
+                            class="cursor-pointer"
+                            name="delete"
+                            size="16px"
+                            @click="delNeuron(props.row)"
                         />
                     </div>
                 </q-td>

@@ -13,8 +13,9 @@ export const editNeuronStore = defineStore('editNeuronStore', () => {
     const loadData = ref(true);
 
     const updateNeuron = async() => {
-
         try {
+            thisEditNeuron.value.dateEdit = new Date().getTime();
+
             await axios({
                 method: 'put',
                 url: `https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons/${thisEditNeuron.value.id}`,

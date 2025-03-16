@@ -193,6 +193,3 @@ const delSetting = (index) => createNeuron.value.settings.splice(index, 1);
 
 </template>
 
-<style lang='scss' scoped>
-
-</style>

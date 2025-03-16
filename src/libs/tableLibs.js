@@ -24,16 +24,16 @@ export const columns = [
         field: 'chapter',
     },
     {
-        name: 'dateEdit',
-        align: 'center',
-        label: 'Дата изменения',
-        field: 'dateEdit',
-    },
-    {
         name: 'createdAt',
         align: 'center',
         label: 'Дата создания',
         field: 'createdAt',
+    },
+    {
+        name: 'dateEdit',
+        align: 'center',
+        label: 'Дата изменения',
+        field: 'dateEdit',
     },
     {
         name: 'edit',

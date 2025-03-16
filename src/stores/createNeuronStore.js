@@ -15,12 +15,16 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
         popular: false,
         newTile: true,
         active: true,
+        dateEdit: null,
+        createdAt: null,
         image: null,
         name: '',
     });
 
     const addNeuron = async () => {
         try {
+            createNeuron.value.createdAt = new Date();
+
             await axios({
                 method: 'post',
                 url: 'https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons',
