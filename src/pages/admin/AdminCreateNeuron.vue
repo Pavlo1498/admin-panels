@@ -3,16 +3,18 @@ import CreateNeuronSettings from 'components/createNeuron/CreateNeuronSettings.v
 import CreateNeuronCheckBox from 'components/createNeuron/CreateNeuronCheckBox.vue';
 import CreateNeuronInput from 'components/createNeuron/CreateNeuronInput.vue';
 import WdWrapper from 'src/widgets/WdWrapper.vue';
+import WdHr from 'src/widgets/WdHr.vue';
+
 </script>
 
 <template>
     <WdWrapper>
         <div class="q-mb-md"><font size="5">Создание нейросети</font></div>
-        <hr class="q-mb-md"/>
+        <WdHr  />
         <CreateNeuronCheckBox class="q-mb-md"/>
-        <hr class="q-mb-md"/>
+        <WdHr />
         <CreateNeuronInput class="q-mb-md"/>
-        <hr class="q-mb-md"/>
+        <WdHr />
         <CreateNeuronSettings />
     </WdWrapper>
 </template>

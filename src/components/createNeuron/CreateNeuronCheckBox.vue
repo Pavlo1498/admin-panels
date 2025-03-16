@@ -9,8 +9,8 @@ const { createNeuron } = storeToRefs(createNeuronStore());
 
 <template>
     <div>
-        <div class="q-mb-md"><font size="4">Состояния плитки</font></div>
         <q-card class="q-pa-md">
+            <div class="q-mb-md"><font size="4">Состояния плитки</font></div>
             <q-checkbox
                 v-model="createNeuron.active"
                 label="Активна"

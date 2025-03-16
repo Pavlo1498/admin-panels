@@ -2,6 +2,7 @@
  import { storeToRefs } from 'pinia';
 
 import { createNeuronStore } from 'stores/createNeuronStore.js';
+import { chapters } from 'src/libs/selectsLibs';
 
 const { createNeuron } = storeToRefs(createNeuronStore());
 
@@ -11,8 +12,8 @@ const upload = (file) => createNeuron.image = file[0];
 
 <template>
     <div>
-        <div class="q-mb-md"><font size="4">Описание плитки</font></div>
         <q-card class="create-input q-pa-md">
+            <div class="q-mb-md"><font size="4">Описание плитки</font></div>
             <div class="create-input__content">
                 <div class="create-input__left-block">
                     <q-input
@@ -26,9 +27,9 @@ const upload = (file) => createNeuron.image = file[0];
                         label="Описание"
                     />
                     <q-select
-                        v-model="createNeuron.model"
+                        v-model="createNeuron.chapter"
                         outlined
-                        :options="options"
+                        :options="chapters"
                         label="Раздел"
                     />
                 </div>
