@@ -5,9 +5,6 @@ import { createNeuronStore } from 'stores/createNeuronStore.js';
 import { chapters } from 'src/libs/selectsLibs';
 
 const { createNeuron } = storeToRefs(createNeuronStore());
-
-const upload = (file) => createNeuron.image = file[0];
-
 </script>
 
 <template>
@@ -36,15 +33,6 @@ const upload = (file) => createNeuron.image = file[0];
                         outlined
                         :options="chapters"
                         label="Раздел"
-                    />
-                </div>
-                <div class="create-input__right-block">
-                    <q-uploader
-                        color="primary"
-                        flat
-                        bordered
-                        style="max-width: 300px"
-                        @added="upload"
                     />
                 </div>
             </div>

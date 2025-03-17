@@ -1,9 +1,9 @@
 <script setup>
- import { computed, ref, watchEffect } from 'vue';
- import { storeToRefs } from 'pinia';
+import { computed, ref, watchEffect } from 'vue';
+import { storeToRefs } from 'pinia';
 
- import { createNeuronStore } from 'stores/createNeuronStore.js';
- import { types } from 'src/libs/selectsLibs';
+import { createNeuronStore } from 'stores/createNeuronStore.js';
+import { types } from 'src/libs/selectsLibs';
 
 const { createNeuron } = storeToRefs(createNeuronStore());
 

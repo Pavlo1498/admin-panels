@@ -2,9 +2,9 @@
 import { storeToRefs } from 'pinia';
 
 import { editNeuronStore } from 'stores/editNeuronStore.js';
+import { types } from 'src/libs/selectsLibs';
 
- const { thisEditNeuron } = storeToRefs(editNeuronStore());
-
+const { thisEditNeuron } = storeToRefs(editNeuronStore());
 </script>
 
 <template>
@@ -49,23 +49,10 @@ import { editNeuronStore } from 'stores/editNeuronStore.js';
             <q-select
                 v-model="thisEditNeuron.chapter"
                 outlined
-                :options="options"
+                :options="types"
                 label="Раздел"
-            />
-        </div>
-        <q-space />
-        <div>
-            <q-uploader
-                color="primary"
-                flat
-                bordered
-                style="max-width: 300px"
-                @added="upload"
             />
         </div>
     </div>
 </template>
 
-<style lang='scss' scoped>
-
-</style>
