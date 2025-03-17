@@ -11,8 +11,9 @@
 <style lang='scss' scoped>
 .wd-wrapper {
     display: flex;
-    flex-direction: column;
     flex: 1;
+    flex-direction: column;
+    overflow: auto;
     height: 100%;
 }
 </style>

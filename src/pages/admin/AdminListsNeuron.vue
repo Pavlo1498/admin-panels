@@ -1,20 +1,24 @@
 <script setup>
 import { storeToRefs } from 'pinia';
-import { onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { date } from 'quasar'
 
 import { listsNeuronStore } from 'stores/listsNeuronStore.js';
 import { editNeuronStore } from 'stores/editNeuronStore.js';
 import { columns } from 'src/libs/tableLibs';
+import { confirm } from 'src/helpers';
 
 import WdWrapper from 'src/widgets/WdWrapper.vue';
+import WdDialog from 'src/widgets/WdDialog.vue';
 
 const { rows, loadData } = storeToRefs(listsNeuronStore());
 const { editNeuron } = storeToRefs(editNeuronStore());
-const { getRows, delNeuron } = listsNeuronStore();
+const { getRows, updateACtiveNeuron, delNeuron } = listsNeuronStore();
 
 const router = useRouter();
+
+const selectDelNeuron = ref(null);
 
 onMounted(() => {
     getRows()
@@ -22,6 +26,12 @@ onMounted(() => {
 </script>
 
 <template>
+    <WdDialog
+        v-if="confirm"
+        :itemName="selectDelNeuron?.name"
+        @confirm="delNeuron(selectDelNeuron), selectDelNeuron = null"
+        @cancel="confirm = false, selectDelNeuron = null"
+    />
     <WdWrapper>
         <q-table
             flat
@@ -30,6 +40,9 @@ onMounted(() => {
             :rows="rows"
             :loading="loadData"
             :columns="columns"
+            :pagination="{
+                rowsPerPage: 10
+            }"
             row-key="id"
         >
         <template v-slot:loading>
@@ -44,6 +57,7 @@ onMounted(() => {
                     <q-toggle
                         v-model="props.row.active"
                         color="green"
+                        @update:model-value="updateACtiveNeuron(props.row)"
                     />
                 </q-td>
                 <q-td key="name" :props="props">
@@ -70,7 +84,7 @@ onMounted(() => {
                             class="cursor-pointer"
                             name="delete"
                             size="16px"
-                            @click="delNeuron(props.row)"
+                            @click="confirm = true, selectDelNeuron = props.row"
                         />
                     </div>
                 </q-td>

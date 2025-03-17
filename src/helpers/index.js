@@ -4,6 +4,7 @@ import { ref } from 'vue';
 import { resource } from 'src/libs/resourceLib';
 
 export const leftDrawerOpen = ref(true);
+export const confirm = ref(false);
 
 export const pushNeuronMockApi = async () => {
     await axios({

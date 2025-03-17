@@ -7,19 +7,21 @@ import { listsNeuronStore } from 'stores/listsNeuronStore.js';
 
 export const createNeuronStore = defineStore('createNeuronStore', () => {
     const loadData = ref(true);
-    const createNeuron = ref({
+    const staticCreateNeuron = ref({
         description: '',
-        chapter: '',
+        apiRequest: null,
+        createdAt: null,
         external: false,
         settings: [],
+        dateEdit: null,
         popular: false,
+        chapter: '',
         newTile: true,
         active: true,
-        dateEdit: null,
-        createdAt: null,
         image: null,
         name: '',
-    });
+    })
+    const createNeuron = ref({...staticCreateNeuron.value});
 
     const addNeuron = async () => {
         try {
@@ -33,18 +35,27 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
                 }
             })
 
-            await listsNeuronStore().getRows()
+            clearCreated();
+            await listsNeuronStore().getRows();
         } catch (error) {
             console.log(error);
         }
     }
 
+    const clearCreated = () => {
+        createNeuron.value = staticCreateNeuron.value;
+        staticCreateNeuron.value.settings = [];
+        createNeuron.value.settings = [];
+    }
+
     return{
         // state
+        staticCreateNeuron,
         createNeuron,
         loadData,
 
         //methods
+        clearCreated,
         addNeuron,
     };
 });

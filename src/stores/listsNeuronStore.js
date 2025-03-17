@@ -24,9 +24,22 @@ export const listsNeuronStore = defineStore('listsNeuronStore', () => {
     }
 
     const delNeuron = async (neuron) => {
+
         await axios({
             method: 'DELETE',
             url: `https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons/${neuron.id}`,
+        })
+
+        await getRows();
+    }
+
+    const updateACtiveNeuron = async (neuron) => {
+        await axios({
+            method: 'put',
+            url: `https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons/${neuron.id}`,
+            data: {
+                ...neuron
+            }
         })
 
         await getRows();
@@ -37,6 +50,7 @@ export const listsNeuronStore = defineStore('listsNeuronStore', () => {
         rows,
 
         //methods
+        updateACtiveNeuron,
         delNeuron,
         getRows,
     };

@@ -26,6 +26,11 @@ const upload = (file) => createNeuron.image = file[0];
                         outlined
                         label="Описание"
                     />
+                    <q-input
+                        v-model="createNeuron.apiRequest"
+                        outlined
+                        label="api-запрос"
+                    />
                     <q-select
                         v-model="createNeuron.chapter"
                         outlined
@@ -64,9 +69,6 @@ const upload = (file) => createNeuron.image = file[0];
         flex-direction: column;
         gap: 8px;
         width: 400px;
-    }
-
-    &__right-block {
     }
 }
 </style>

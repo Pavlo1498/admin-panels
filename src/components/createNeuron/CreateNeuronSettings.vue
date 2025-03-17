@@ -1,12 +1,11 @@
 <script setup>
- import { storeToRefs } from 'pinia';
  import { computed, ref, watchEffect } from 'vue';
+ import { storeToRefs } from 'pinia';
 
  import { createNeuronStore } from 'stores/createNeuronStore.js';
  import { types } from 'src/libs/selectsLibs';
 
 const { createNeuron } = storeToRefs(createNeuronStore());
-const { addNeuron } = createNeuronStore();
 
 const addParam = ref({
     name: '',
@@ -28,7 +27,6 @@ const disableBtn = computed(() => {
     return addParam.value.name !== '' && addParam.value.type !== ''
 });
 
-const disableBtnCreate = computed(() => createNeuron.value.name !== '' && createNeuron.value.chapter !== '');
 
 const addSetting = (set) => {
     if (set.type === 'input') {
@@ -66,6 +64,7 @@ const addSetting = (set) => {
 };
 
 const delSetting = (index) => createNeuron.value.settings.splice(index, 1);
+
 </script>
 
 <template>
@@ -180,15 +179,6 @@ const delSetting = (index) => createNeuron.value.settings.splice(index, 1);
                 </template>
             </div>
         </q-card>
-        <q-space />
-        <q-btn
-            class="q-ml-auto"
-            color="positive"
-            label="Сохранить"
-            :disable="!disableBtnCreate"
-            style="width: 200px;"
-            @click="addNeuron"
-        />
     </div>
 
 </template>
