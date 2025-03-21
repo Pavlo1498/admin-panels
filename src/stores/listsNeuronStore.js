@@ -12,26 +12,26 @@ export const listsNeuronStore = defineStore('listsNeuronStore', () => {
             loadData.value = true;
             const resp = await axios({
                 method: 'get',
-                url: 'https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons',
-            })
+                url: 'https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons'
+            });
 
-            rows.value = resp.data
+            rows.value = resp.data;
             loadData.value = false;
         } catch (error) {
             console.log(error);
             loadData.value = false;
         }
-    }
+    };
 
     const delNeuron = async (neuron) => {
 
         await axios({
             method: 'DELETE',
-            url: `https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons/${neuron.id}`,
-        })
+            url: `https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons/${neuron.id}`
+        });
 
         await getRows();
-    }
+    };
 
     const updateACtiveNeuron = async (neuron) => {
         await axios({
@@ -40,10 +40,10 @@ export const listsNeuronStore = defineStore('listsNeuronStore', () => {
             data: {
                 ...neuron
             }
-        })
+        });
 
         await getRows();
-    }
+    };
     return{
         // state
         loadData,
@@ -52,6 +52,6 @@ export const listsNeuronStore = defineStore('listsNeuronStore', () => {
         //methods
         updateACtiveNeuron,
         delNeuron,
-        getRows,
+        getRows
     };
 });

@@ -1,4 +1,4 @@
-import autoprefixer from 'autoprefixer'
+import autoprefixer from 'autoprefixer';
 
 export default {
   plugins: [
@@ -13,6 +13,6 @@ export default {
         'last 4 FirefoxAndroid versions',
         'last 4 iOS versions'
       ]
-    }),
+    })
   ]
-}
+};

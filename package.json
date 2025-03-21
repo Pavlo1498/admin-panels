@@ -12,9 +12,10 @@
         "dev": "quasar dev",
         "build": "quasar build",
         "postinstall": "quasar prepare",
-        "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
-        "stylelint": "stylelint '**/*{.css, .scss, .vue}'",
-        "stylelint:fix": "stylelint '**/*{.css, .scss, .vue}' --fix"
+        "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs",
+        "lint:fix": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix" ,
+        "stylelint": "stylelint \"src/**/*.{css,scss,vue,js}\"",
+        "stylelint:fix": "stylelint \"src/**/*.{css,scss,vue,js}\" --fix"
     },
     "dependencies": {
         "@quasar/extras": "^1.16.17",

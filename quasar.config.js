@@ -1,8 +1,8 @@
-import { fileURLToPath } from 'node:url'
+import { fileURLToPath } from 'node:url';
 
-import { defineConfig } from '#q-app/wrappers'
+import { defineConfig } from '#q-app/wrappers';
 
-const setAliasPath = (path) => fileURLToPath(new URL(path, import.meta.url))
+const setAliasPath = (path) => fileURLToPath(new URL(path, import.meta.url));
 
 export default defineConfig(() => {
   return {
@@ -10,19 +10,19 @@ export default defineConfig(() => {
     css: ['app.scss'],
     extras: [
       'roboto-font',
-      'material-icons',
+      'material-icons'
     ],
     build: {
       target: {
         browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
-        node: 'node20',
+        node: 'node20'
       },
 
       vueRouterMode: 'history',
       extendViteConf(viteConf) {
         Object.assign(viteConf.resolve.alias, {
-          helpers: setAliasPath('./src/helpers'),
-        })
+          helpers: setAliasPath('./src/helpers')
+        });
       },
       vitePlugins: [
         [
@@ -30,47 +30,47 @@ export default defineConfig(() => {
           {
             eslint: {
               lintCommand: 'eslint -c ./eslint.config.js "./src*/**/*.{js,mjs,cjs,vue}"',
-              useFlatConfig: true,
-            },
+              useFlatConfig: true
+            }
           },
-          { server: false },
-        ],
-      ],
+          { server: false }
+        ]
+      ]
     },
     devServer: {
-      open: true,
+      open: true
     },
     framework: {
       config: {},
       plugins: [
         'Notify'
-      ],
+      ]
     },
     animations: [],
     ssr: {
       prodPort: 3000,
 
       middlewares: [
-        'render',
+        'render'
       ],
-      pwa: false,
+      pwa: false
     },
     pwa: {
-      workboxMode: 'GenerateSW',
+      workboxMode: 'GenerateSW'
     },
     capacitor: {
-      hideSplashscreen: true,
+      hideSplashscreen: true
     },
     electron: {
       preloadScripts: ['electron-preload'],
       inspectPort: 5858,
       bundler: 'packager',
       builder: {
-        appId: 'admin-panels',
-      },
+        appId: 'admin-panels'
+      }
     },
     bex: {
-      extraScripts: [],
-    },
-  }
-})
+      extraScripts: []
+    }
+  };
+});

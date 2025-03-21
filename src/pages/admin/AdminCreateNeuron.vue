@@ -1,5 +1,5 @@
 <script setup>
- import { onUnmounted} from 'vue';
+ import { onUnmounted } from 'vue';
 
  import { createNeuronStore } from 'stores/createNeuronStore.js';
  import { disableBtn } from 'src/helpers';
@@ -13,7 +13,7 @@
  const { addNeuron, clearCreated } = createNeuronStore();
 
 onUnmounted(() => {
-    clearCreated()
+    clearCreated();
     disableBtn.value = true;
 });
 </script>

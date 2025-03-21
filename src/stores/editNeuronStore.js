@@ -2,12 +2,12 @@ import axios from 'axios';
 
 import { watchEffect, ref } from 'vue';
 import { defineStore } from 'pinia';
-import { Notify } from 'quasar'
+import { Notify } from 'quasar';
 
 import Router from 'src/router/index.js';
 
 export const editNeuronStore = defineStore('editNeuronStore', () => {
-    const thisEditNeuron = ref(null)
+    const thisEditNeuron = ref(null);
     const editNeuron = ref(null);
     const hasChanged = ref(false);
     const loadData = ref(true);
@@ -22,7 +22,7 @@ export const editNeuronStore = defineStore('editNeuronStore', () => {
                 data: {
                     ...thisEditNeuron.value
                 }
-            })
+            });
 
             Notify.create({
                 progress: true,
@@ -30,20 +30,20 @@ export const editNeuronStore = defineStore('editNeuronStore', () => {
                 icon: 'done',
                 color: 'white',
                 textColor: 'green'
-            })
+            });
 
-            Router.push('lists')
+            Router.push('lists');
         } catch (error) {
             console.log(error);
         }
-    }
+    };
 
     watchEffect(() => {
         if (editNeuron.value) {
-            thisEditNeuron.value = {...editNeuron.value}
-            thisEditNeuron.value.settings = [...editNeuron.value.settings]
+            thisEditNeuron.value = { ...editNeuron.value };
+            thisEditNeuron.value.settings = [...editNeuron.value.settings];
         }
-    })
+    });
 
     return{
         // state
@@ -53,6 +53,6 @@ export const editNeuronStore = defineStore('editNeuronStore', () => {
         loadData,
 
         //methods
-        updateNeuron,
+        updateNeuron
     };
 });

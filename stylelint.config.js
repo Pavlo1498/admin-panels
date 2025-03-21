@@ -6,12 +6,14 @@ export default {
         'stylelint-config-recommended-vue/scss',
         'stylelint-config-html/vue'
     ],
-    plugins: ['stylelint-scss', 'stylelint-order'],
+    plugins: [
+        'stylelint-scss',
+        'stylelint-order'
+    ],
     rules: {
         'font-family-name-quotes': 'always-where-recommended',
         'alpha-value-notation': 'number',
-        'function-no-unknown': [
-            true,
+        'function-no-unknown': [true,
             {
                 ignoreFunctions: [
                     'map-get',
@@ -54,8 +56,8 @@ export default {
         'order/order': [
             [
                 {
-                    type: 'at-rule',
-                    name: 'import'
+                    'type': 'at-rule',
+                    'name': 'import'
                 },
                 'dollar-variables',
                 {

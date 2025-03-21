@@ -8,10 +8,10 @@ export const disableBtn = ref(true);
 export const confirm = ref(false);
 
 export const isValid = computed(() => (val) => {
-    const result = val.match(/^[a-zA-Z]+$/) !== null
+    const result = val.match(/^[a-zA-Z]+$/) !== null;
     disableBtn.value = result;
 
-    return result
+    return result;
 });
 
 export const pushNeuronMockApi = async () => {
@@ -21,5 +21,5 @@ export const pushNeuronMockApi = async () => {
         data: {
             ...resource
         }
-    })
-}
+    });
+};

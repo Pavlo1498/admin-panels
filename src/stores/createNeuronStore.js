@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 
 import { defineStore } from 'pinia';
 import { reactive, watch,  ref } from 'vue';
-import { Notify } from 'quasar'
+import { Notify } from 'quasar';
 
 import { listsNeuronStore } from 'stores/listsNeuronStore.js';
 
@@ -11,7 +11,7 @@ const schema = Yup.object().shape({
     name: Yup.string().required('Обязательное поле')
     .min(3, 'не меньше 3-х символов')
     .max(15, 'не больше 15ти символов'),
-    description: Yup.string().max(15, 'не больше 15ти символов'),
+    description: Yup.string().max(15, 'не больше 15ти символов')
 });
 
 export const createNeuronStore = defineStore('createNeuronStore', () => {
@@ -29,9 +29,9 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
         newTile: true,
         active: true,
         image: null,
-        name: '',
-    })
-    const createNeuron = ref({...staticCreateNeuron.value});
+        name: ''
+    });
+    const createNeuron = ref({ ...staticCreateNeuron.value });
 
     const addNeuron = async () => {
         try {
@@ -44,7 +44,7 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
                 data: {
                     ...createNeuron.value
                 }
-            })
+            });
 
             clearCreated();
             await listsNeuronStore().getRows();
@@ -54,29 +54,28 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
                 icon: 'done',
                 color: 'white',
                 textColor: 'green'
-            })
+            });
 
         } catch (validationErrors) {
-            validationErrors.inner.forEach
-            (err => {
+            validationErrors.inner.forEach(err => {
                 errors[err.path] = err.message;
             });
 
             Notify.create({
                 progress: true,
-                message: `Ошибки в форме заполнения`,
+                message: 'Ошибки в форме заполнения',
                 icon: 'error',
                 color: 'white',
                 textColor: 'red'
-            })
+            });
         }
-    }
+    };
 
     const clearCreated = () => {
         createNeuron.value = staticCreateNeuron.value;
         staticCreateNeuron.value.settings = [];
         createNeuron.value.settings = [];
-    }
+    };
 
     const validateField = async (field) => {
         try {
@@ -106,6 +105,6 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
 
         //methods
         clearCreated,
-        addNeuron,
+        addNeuron
     };
 });

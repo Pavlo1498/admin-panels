@@ -4,7 +4,7 @@
 import { createNeuronStore } from 'stores/createNeuronStore.js';
 import { chapters } from 'src/libs/selectsLibs';
 
-const { createNeuron, errors} = storeToRefs(createNeuronStore());
+const { createNeuron, errors } = storeToRefs(createNeuronStore());
 </script>
 
 <template>

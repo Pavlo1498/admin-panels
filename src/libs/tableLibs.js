@@ -3,42 +3,42 @@ export const columns = [
         name: 'id',
         align: 'center',
         label: 'id',
-        field: 'id',
+        field: 'id'
     },
     {
         name: 'active',
         align: 'center',
         label: 'Состояние',
-        field: 'active',
+        field: 'active'
     },
     {
         name: 'name',
         align: 'center',
         label: 'Название',
-        field: 'name',
+        field: 'name'
     },
     {
         name: 'chapter',
         align: 'center',
         label: 'Раздел',
-        field: 'chapter',
+        field: 'chapter'
     },
     {
         name: 'createdAt',
         align: 'center',
         label: 'Дата создания',
-        field: 'createdAt',
+        field: 'createdAt'
     },
     {
         name: 'dateEdit',
         align: 'center',
         label: 'Дата изменения',
-        field: 'dateEdit',
+        field: 'dateEdit'
     },
     {
         name: 'edit',
         align: 'center',
         label: 'Действия',
-        field: 'edit',
-    },
-  ]
+        field: 'edit'
+    }
+  ];

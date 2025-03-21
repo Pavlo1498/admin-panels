@@ -20,10 +20,10 @@ const $q = useQuasar();
 <style lang='scss' scoped>
 .wd-theme {
     position: relative;
-    background-color: slateGray;
-    box-shadow: -4px 4px 15px inset rgba(0, 0, 0, 0.4);
     width: 120px;
     height: 50px;
     border-radius: 50px;
+    background-color: #708090;
+    box-shadow: -4px 4px 15px inset rgba(0, 0, 0, 0.4);
 }
 </style>

@@ -17,14 +17,14 @@ watchEffect(() => {
         return addParam.value.array = [{
             name: '',
             value: ''
-        }]
+        }];
     }
 
-    if (addParam.value?.array) delete addParam.value['array']
+    if (addParam.value?.array) delete addParam.value['array'];
 });
 
 const disableBtn = computed(() => {
-    return addParam.value.name !== '' && addParam.value.type !== ''
+    return addParam.value.name !== '' && addParam.value.type !== '';
 });
 
 const addSetting = (set) => {
@@ -43,8 +43,8 @@ const addSetting = (set) => {
           type: 'select',
           props: {
                 options: [...set.array],
-                label: set.name,
-            },
+                label: set.name
+            }
         });
       }
 
@@ -66,8 +66,8 @@ const delSetting = (index) => thisEditNeuron.value.settings.splice(index, 1);
 </script>
 
 <template>
-<div class=''>
-    <q-card class="q-pa-md">
+    <div class=''>
+        <q-card class="q-pa-md">
             <div class="q-mb-md"><font size="4">Настройки плитки</font></div>
             <template v-if="thisEditNeuron.settings">
                 <div class="flex column q-gutter-sm">
@@ -92,7 +92,7 @@ const delSetting = (index) => thisEditNeuron.value.settings.splice(index, 1);
                                 outlined
                                 :options="setting.props.options"
                                 :label="setting.props.label"
-                                 option-label="name"
+                                option-label="name"
                                 :style="{
                                     width: '200px'
                                 }"
@@ -177,5 +177,5 @@ const delSetting = (index) => thisEditNeuron.value.settings.splice(index, 1);
                 </template>
             </div>
         </q-card>
-</div>
+    </div>
 </template>
