@@ -3,7 +3,7 @@ import { computed, ref, watchEffect } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { createNeuronStore } from 'stores/createNeuronStore.js';
-import { isValid } from 'src/helpers';
+import { dsblBtn, isValid } from 'src/helpers';
 import { types } from 'src/libs/selectsLibs';
 
 const { createNeuron } = storeToRefs(createNeuronStore());
@@ -65,6 +65,15 @@ const addSetting = (set) => {
 };
 
 const delSetting = (index) => createNeuron.value.settings.splice(index, 1);
+const delParam = (index) => {
+    addParam.value.array.splice(index, 1);
+
+    if (addParam.value.array.length === 0) {
+        addParam.value.type = '';
+        dsblBtn.value = true;
+        delete addParam.value.array;
+    }
+};
 
 </script>
 
@@ -165,6 +174,13 @@ const delSetting = (index) => createNeuron.value.settings.splice(index, 1);
                                 v-model="arr.value"
                                 outlined
                                 label="Значение"
+                            />
+                            <q-icon
+                                class="cursor-pointer q-mt-lg"
+                                color="red"
+                                name="cancel"
+                                size="24px"
+                                @click="delParam(index)"
                             />
                         </div>
                         <q-btn

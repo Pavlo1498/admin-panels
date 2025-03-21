@@ -1,9 +1,10 @@
 <script setup>
-import { onMounted, watch } from 'vue';
+import { onMounted, watch, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 
 import { editNeuronStore } from 'stores/editNeuronStore.js';
+import { dsblBtn } from 'src/helpers';
 
 import EditNeuronSettings from 'components/editNeuron/EditNeuronSettings.vue';
 import EditNeuronInfo from 'components/editNeuron/EditNeuronInfo.vue';
@@ -22,6 +23,10 @@ watch(thisEditNeuron, (newVal) => {
 onMounted(() => {
    if (!editNeuron.value) return router.push('lists');
 });
+
+onUnmounted(() => {
+    dsblBtn.value = true;
+});
 </script>
 
 <template>
@@ -36,7 +41,7 @@ onMounted(() => {
         <q-btn
             class="q-ml-auto"
             color="positive"
-            :disable="!hasChanged"
+            :disable="!hasChanged || !dsblBtn"
             label="Сохранить"
             style="width: 200px;"
             @click="updateNeuron()"

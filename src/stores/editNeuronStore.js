@@ -1,19 +1,29 @@
 import axios from 'axios';
+import * as Yup from 'yup';
 
-import { watchEffect, ref } from 'vue';
+import { watchEffect, watch, reactive, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { Notify } from 'quasar';
 
 import Router from 'src/router/index.js';
+
+const schema = Yup.object().shape({
+    name: Yup.string().required('Обязательное поле')
+    .min(3, 'не меньше 3-х символов')
+    .max(15, 'не больше 15ти символов'),
+    description: Yup.string().max(15, 'не больше 15ти символов')
+});
 
 export const editNeuronStore = defineStore('editNeuronStore', () => {
     const thisEditNeuron = ref(null);
     const editNeuron = ref(null);
     const hasChanged = ref(false);
     const loadData = ref(true);
+    const errors = reactive({});
 
     const updateNeuron = async() => {
         try {
+            await schema.validate(thisEditNeuron.value, { abortEarly: false });
             thisEditNeuron.value.dateEdit = new Date().getTime();
 
             await axios({
@@ -33,8 +43,10 @@ export const editNeuronStore = defineStore('editNeuronStore', () => {
             });
 
             Router.push('lists');
-        } catch (error) {
-            console.log(error);
+        } catch (validationErrors) {
+            validationErrors.inner.forEach(err => {
+                errors[err.path] = err.message;
+            });
         }
     };
 
@@ -44,6 +56,25 @@ export const editNeuronStore = defineStore('editNeuronStore', () => {
             thisEditNeuron.value.settings = [...editNeuron.value.settings];
         }
     });
+
+    const validateField = async (field) => {
+        try {
+            errors[field] = '';
+            await schema.validateAt(field, thisEditNeuron.value);
+        } catch (err) {
+            errors[field] = err.message;
+        }
+    };
+
+    for (const key in thisEditNeuron.value) {
+        if (key === 'name' || key === 'description') {
+            watch(() => thisEditNeuron.value[key], () => {
+                validateField(key);
+                },
+                { immediate: true }
+            );
+        }
+    }
 
     return{
         // state

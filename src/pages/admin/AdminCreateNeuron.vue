@@ -2,7 +2,7 @@
  import { onUnmounted } from 'vue';
 
  import { createNeuronStore } from 'stores/createNeuronStore.js';
- import { disableBtn } from 'src/helpers';
+ import { dsblBtn } from 'src/helpers';
 
  import CreateNeuronSettings from 'components/createNeuron/CreateNeuronSettings.vue';
  import CreateNeuronCheckBox from 'components/createNeuron/CreateNeuronCheckBox.vue';
@@ -14,7 +14,7 @@
 
 onUnmounted(() => {
     clearCreated();
-    disableBtn.value = true;
+    dsblBtn.value = true;
 });
 </script>
 
@@ -36,7 +36,7 @@ onUnmounted(() => {
             class="q-ml-auto q-my-md"
             color="positive"
             label="Сохранить"
-            :disable="!disableBtn"
+            :disable="!dsblBtn"
             style="width: 200px;"
             @click="addNeuron"
         />

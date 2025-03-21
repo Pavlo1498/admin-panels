@@ -1,8 +1,8 @@
 import axios from 'axios';
 import * as Yup from 'yup';
 
-import { defineStore } from 'pinia';
 import { reactive, watch,  ref } from 'vue';
+import { defineStore } from 'pinia';
 import { Notify } from 'quasar';
 
 import { listsNeuronStore } from 'stores/listsNeuronStore.js';
@@ -48,6 +48,7 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
 
             clearCreated();
             await listsNeuronStore().getRows();
+
             Notify.create({
                 progress: true,
                 message: `Плитка ${createNeuron.value.name} создана`,

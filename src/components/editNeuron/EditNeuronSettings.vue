@@ -3,6 +3,7 @@
 import { storeToRefs } from 'pinia';
 
 import { editNeuronStore } from 'stores/editNeuronStore.js';
+import { dsblBtn, isValid } from 'src/helpers';
 import { types } from 'src/libs/selectsLibs';
 
  const { thisEditNeuron } = storeToRefs(editNeuronStore());
@@ -63,6 +64,15 @@ const addSetting = (set) => {
 };
 
 const delSetting = (index) => thisEditNeuron.value.settings.splice(index, 1);
+const delParam = (index) => {
+    addParam.value.array.splice(index, 1);
+
+    if (addParam.value.array.length === 0) {
+        addParam.value.type = '';
+        dsblBtn.value = true;
+        delete addParam.value.array;
+    }
+};
 </script>
 
 <template>
@@ -143,8 +153,8 @@ const delSetting = (index) => thisEditNeuron.value.settings.splice(index, 1);
                     />
                 </div>
                 <template v-if="addParam.type === 'select'">
-                    <span>заполните массив данными</span>
                     <div class="q-gutter-sm">
+                        <span>заполните массив данными</span>
                         <div
                             v-for="(arr, index) in addParam.array"
                             :key="index"
@@ -153,12 +163,23 @@ const delSetting = (index) => thisEditNeuron.value.settings.splice(index, 1);
                             <q-input
                                 v-model="arr.name"
                                 outlined
+                                style="width: 200px;"
+                                error-message="Имя должно содержать только буквы и быть на Латинице"
+                                :error="!isValid(arr.name)"
                                 label="Название"
                             />
                             <q-input
                                 v-model="arr.value"
                                 outlined
+                                :rules="[ val => val.length <= 20 || 'Please use maximum 20 characters']"
                                 label="Значение"
+                            />
+                            <q-icon
+                                class="cursor-pointer q-mt-lg"
+                                color="red"
+                                name="cancel"
+                                size="24px"
+                                @click="delParam(index)"
                             />
                         </div>
                         <q-btn

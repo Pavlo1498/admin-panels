@@ -4,12 +4,14 @@ import { computed, ref } from 'vue';
 import { resource } from 'src/libs/resourceLib';
 
 export const leftDrawerOpen = ref(true);
-export const disableBtn = ref(true);
+export const dsblBtn = ref(true);
 export const confirm = ref(false);
 
 export const isValid = computed(() => (val) => {
+    console.log(val);
+
     const result = val.match(/^[a-zA-Z]+$/) !== null;
-    disableBtn.value = result;
+    dsblBtn.value = result;
 
     return result;
 });
