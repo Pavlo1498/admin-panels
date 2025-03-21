@@ -11,10 +11,6 @@ export default route(function (/* { store, ssrContext } */) {
   const Router = createRouter({
     scrollBehavior: () => ({ left: 0, top: 0 }),
     routes,
-
-    // Leave this as is and make changes in the quasar.config file instead!
-    // quasar.config file -> build -> vueRouterMode
-    // quasar.config file -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE)
   })
 

@@ -3,7 +3,6 @@ import axios from 'axios';
 import { watchEffect, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { Notify } from 'quasar'
-// import { listsNeuronStore } from 'stores/listsNeuronStore.js';
 import Router from 'src/router/index.js';
 
 export const editNeuronStore = defineStore('editNeuronStore', () => {
@@ -33,7 +32,6 @@ export const editNeuronStore = defineStore('editNeuronStore', () => {
             })
 
             Router.push('lists')
-            // await listsNeuronStore().getRows()
         } catch (error) {
             console.log(error);
         }
