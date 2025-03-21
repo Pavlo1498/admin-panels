@@ -9,10 +9,11 @@ import { editNeuronStore } from 'stores/editNeuronStore.js';
 import { columns } from 'src/libs/tableLibs';
 import { confirm } from 'src/helpers';
 
+import SelectListsNeuron from 'components/btn/SelectListsNeuron.vue';
 import WdWrapper from 'src/widgets/WdWrapper.vue';
 import WdDialog from 'src/widgets/WdDialog.vue';
 
-const { rows, loadData } = storeToRefs(listsNeuronStore());
+const { filterRows, loadData } = storeToRefs(listsNeuronStore());
 const { editNeuron } = storeToRefs(editNeuronStore());
 const { getRows, updateACtiveNeuron, delNeuron } = listsNeuronStore();
 
@@ -26,6 +27,7 @@ onMounted(() => {
 </script>
 
 <template>
+    <SelectListsNeuron class="q-ma-md"/>
     <WdDialog
         v-if="confirm"
         :itemName="selectDelNeuron?.name"
@@ -37,7 +39,7 @@ onMounted(() => {
             flat
             bordered
             title="Нейросети"
-            :rows="rows"
+            :rows="filterRows"
             :loading="loadData"
             :columns="columns"
             :pagination="{

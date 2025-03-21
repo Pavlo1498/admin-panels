@@ -25,7 +25,6 @@ onUnmounted(() => {
                 Создание нейросети
             </font>
         </div>
-        <WdHr  />
         <CreateNeuronCheckBox class="q-mb-md"/>
         <WdHr />
         <CreateNeuronInput class="q-mb-md"/>

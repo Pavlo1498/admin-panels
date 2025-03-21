@@ -13,7 +13,6 @@ import AdminMenu from 'src/components/AdminMenu.vue';
         <q-page-container class="admin-pages__container">
             <router-view />
         </q-page-container>
-
     </q-layout>
 </template>
 
