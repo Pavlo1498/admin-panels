@@ -11,12 +11,16 @@ const schema = Yup.object().shape({
     name: Yup.string().required('Обязательное поле')
     .min(3, 'не меньше 3-х символов')
     .max(15, 'не больше 15ти символов'),
-    description: Yup.string().max(15, 'не больше 15ти символов')
+    description: Yup.string().max(50, 'не больше 50ти символов')
 });
 
 export const createNeuronStore = defineStore('createNeuronStore', () => {
     const loadData = ref(true);
     const errors = reactive({});
+    const addParam = ref({
+        name: '',
+        type: ''
+    });
     const staticCreateNeuron = ref({
         description: '',
         apiRequest: null,
@@ -76,6 +80,10 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
         createNeuron.value = staticCreateNeuron.value;
         staticCreateNeuron.value.settings = [];
         createNeuron.value.settings = [];
+        addParam.value = {
+            name: '',
+            type: ''
+        };
     };
 
     const validateField = async (field) => {
@@ -101,6 +109,7 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
         // state
         staticCreateNeuron,
         createNeuron,
+        addParam,
         loadData,
         errors,
 

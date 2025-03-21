@@ -2,7 +2,6 @@
 import { storeToRefs } from 'pinia';
 
 import { editNeuronStore } from 'stores/editNeuronStore.js';
-import { types } from 'src/libs/selectsLibs';
 
 const { thisEditNeuron } = storeToRefs(editNeuronStore());
 </script>
@@ -25,34 +24,6 @@ const { thisEditNeuron } = storeToRefs(editNeuronStore());
             v-model="thisEditNeuron.popular"
             label="Популярная"
         />
-    </div>
-    <div class="flex">
-        <div
-            class="q-gutter-sm"
-            style="width: 350px;"
-        >
-            <q-input
-                v-model="thisEditNeuron.name"
-                outlined
-                label="Название"
-            />
-            <q-input
-                v-model="thisEditNeuron.description"
-                outlined
-                label="Описание"
-            />
-            <q-input
-                v-model="thisEditNeuron.api"
-                outlined
-                label="api-запрос"
-            />
-            <q-select
-                v-model="thisEditNeuron.chapter"
-                outlined
-                :options="types"
-                label="Раздел"
-            />
-        </div>
     </div>
 </template>
 

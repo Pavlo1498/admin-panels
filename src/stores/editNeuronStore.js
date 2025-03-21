@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as Yup from 'yup';
 
-import { watchEffect, watch, reactive, ref } from 'vue';
+import { watch, reactive, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { Notify } from 'quasar';
 
@@ -11,7 +11,7 @@ const schema = Yup.object().shape({
     name: Yup.string().required('Обязательное поле')
     .min(3, 'не меньше 3-х символов')
     .max(15, 'не больше 15ти символов'),
-    description: Yup.string().max(15, 'не больше 15ти символов')
+    description: Yup.string().max(50, 'не больше 50ти символов')
 });
 
 export const editNeuronStore = defineStore('editNeuronStore', () => {
@@ -20,6 +20,10 @@ export const editNeuronStore = defineStore('editNeuronStore', () => {
     const hasChanged = ref(false);
     const loadData = ref(true);
     const errors = reactive({});
+    const addParam = ref({
+        name: '',
+        type: ''
+    });
 
     const updateNeuron = async() => {
         try {
@@ -42,20 +46,40 @@ export const editNeuronStore = defineStore('editNeuronStore', () => {
                 textColor: 'green'
             });
 
+            addParam.value = {
+                 name: '',
+                type: ''
+            };
             Router.push('lists');
         } catch (validationErrors) {
             validationErrors.inner.forEach(err => {
                 errors[err.path] = err.message;
             });
+
+            Notify.create({
+                progress: true,
+                message: 'Ошибки в форме заполнения',
+                icon: 'error',
+                color: 'white',
+                textColor: 'red'
+            });
         }
     };
 
-    watchEffect(() => {
-        if (editNeuron.value) {
-            thisEditNeuron.value = { ...editNeuron.value };
-            thisEditNeuron.value.settings = [...editNeuron.value.settings];
+    const mounting = () => {
+        thisEditNeuron.value = { ...editNeuron.value };
+        thisEditNeuron.value.settings = [...editNeuron.value.settings];
+
+        for (const key in thisEditNeuron.value) {
+            if (key === 'name' || key === 'description') {
+                watch(() => thisEditNeuron.value[key], () => {
+                    validateField(key);
+                    },
+                    { immediate: true }
+                );
+            }
         }
-    });
+    };
 
     const validateField = async (field) => {
         try {
@@ -66,24 +90,17 @@ export const editNeuronStore = defineStore('editNeuronStore', () => {
         }
     };
 
-    for (const key in thisEditNeuron.value) {
-        if (key === 'name' || key === 'description') {
-            watch(() => thisEditNeuron.value[key], () => {
-                validateField(key);
-                },
-                { immediate: true }
-            );
-        }
-    }
-
     return{
         // state
         thisEditNeuron,
         editNeuron,
         hasChanged,
+        addParam,
         loadData,
+        errors,
 
         //methods
-        updateNeuron
+        updateNeuron,
+        mounting
     };
 });

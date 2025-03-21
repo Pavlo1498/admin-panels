@@ -1,17 +1,12 @@
 <script setup>
- import { computed, ref, watchEffect } from 'vue';
+ import { computed, watchEffect } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { editNeuronStore } from 'stores/editNeuronStore.js';
 import { dsblBtn, isValid } from 'src/helpers';
 import { types } from 'src/libs/selectsLibs';
 
- const { thisEditNeuron } = storeToRefs(editNeuronStore());
-
- const addParam = ref({
-    name: '',
-    type: ''
-});
+ const { addParam, thisEditNeuron } = storeToRefs(editNeuronStore());
 
 watchEffect(() => {
     if (addParam.value.type === 'select') {
