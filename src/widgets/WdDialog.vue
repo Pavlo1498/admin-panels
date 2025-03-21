@@ -1,10 +1,11 @@
-<script setup>
- import { confirm } from 'src/helpers';
+<script setup lang="ts">
+import { confirm } from 'src/helpers';
 
- const emit = defineEmits(['cancel', 'confirm']);
-defineProps(({
-    itemName: String
-}));
+const emit = defineEmits(['cancel', 'confirm']);
+
+defineProps<{
+    itemName: string
+}>();
 </script>
 
 <template>
