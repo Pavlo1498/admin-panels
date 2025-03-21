@@ -1,11 +1,13 @@
 import axios from 'axios';
 
 import { defineStore } from 'pinia';
+import { Notify } from 'quasar';
 import { ref } from 'vue';
 
 import { selectLists, selectNeurons } from 'src/helpers/selectListsHelp';
 
 export const listsNeuronStore = defineStore('listsNeuronStore', () => {
+    const selectedDel = ref([]);
     const filterRows = ref([]);
     const loadData = ref(true);
     const rows = ref([]);
@@ -39,7 +41,42 @@ export const listsNeuronStore = defineStore('listsNeuronStore', () => {
             url: `https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons/${neuron.id}`
         });
 
-        await getRows();
+        Notify.create({
+                progress: true,
+                message: `Нейросеть ${neuron.name} удалена`,
+                icon: 'done',
+                color: 'white',
+                textColor: 'green'
+        });
+
+    };
+
+    const delSelectNeuron = async () => {
+        try {
+            for (let i = 0; i < selectedDel.value.length + 1; i++) {
+                await axios({
+                    method: 'DELETE',
+                    url: `https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons/${selectedDel.value[0].id}`
+                })
+                    .then(() => {
+                        Notify.create({
+                            progress: true,
+                            message: `Нейросеть ${selectedDel.value[0].name} удалена`,
+                            icon: 'done',
+                            color: 'white',
+                            textColor: 'green'
+                        });
+
+                        selectedDel.value.splice(0, 1);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+            }
+            await getRows();
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const updateACtiveNeuron = async (neuron) => {
@@ -67,11 +104,13 @@ export const listsNeuronStore = defineStore('listsNeuronStore', () => {
 
     return{
         // state
+        selectedDel,
         filterRows,
         loadData,
 
         //methods
         updateACtiveNeuron,
+        delSelectNeuron,
         selectFilter,
         delNeuron,
         getRows

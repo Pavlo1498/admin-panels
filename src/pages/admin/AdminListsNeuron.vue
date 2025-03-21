@@ -13,9 +13,9 @@ import SelectListsNeuron from 'components/btn/SelectListsNeuron.vue';
 import WdWrapper from 'src/widgets/WdWrapper.vue';
 import WdDialog from 'src/widgets/WdDialog.vue';
 
-const { filterRows, loadData } = storeToRefs(listsNeuronStore());
+const { filterRows, loadData, selectedDel } = storeToRefs(listsNeuronStore());
 const { editNeuron } = storeToRefs(editNeuronStore());
-const { getRows, updateACtiveNeuron, delNeuron } = listsNeuronStore();
+const { getRows, updateACtiveNeuron, delNeuron, delSelectNeuron } = listsNeuronStore();
 
 const router = useRouter();
 
@@ -24,6 +24,10 @@ const selectDelNeuron = ref(null);
 onMounted(() => {
     getRows();
 });
+
+const getSelectedString = (rows) => {
+    return selectedDel.value.length === 0 ? '' : `Выбрано для удаления ${selectedDel.value.length}`
+}
 </script>
 
 <template>
@@ -46,15 +50,14 @@ onMounted(() => {
                 rowsPerPage: 10
             }"
             row-key="id"
+            selection="multiple"
+            :selected-rows-label="getSelectedString"
+            v-model:selected="selectedDel"
         >
             <template v-slot:loading>
                 <q-inner-loading showing color="primary" />
             </template>
-            <template v-slot:body="props">
-                <q-tr :props="props">
-                    <q-td key="id" :props="props">
-                        <span>{{ props.row.id }}</span>
-                    </q-td>
+            <template v-slot:body-cell-active="props">
                     <q-td key="active" :props="props">
                         <q-toggle
                             v-model="props.row.active"
@@ -62,18 +65,8 @@ onMounted(() => {
                             @update:model-value="updateACtiveNeuron(props.row)"
                         />
                     </q-td>
-                    <q-td key="name" :props="props">
-                        <span>{{ props.row.name }}</span>
-                    </q-td>
-                    <q-td key="chapter" :props="props">
-                        <span>{{ props.row.chapter }}</span>
-                    </q-td>
-                    <q-td key="createdAt" :props="props">
-                        <span>{{ date.formatDate(props.row.createdAt, 'DD.MM.YYYY hh:mm:ss') }}</span>
-                    </q-td>
-                    <q-td key="dateEdit" :props="props">
-                        <span>{{ date.formatDate(props.row.dateEdit, 'DD.MM.YYYY hh:mm:ss') }}</span>
-                    </q-td>
+            </template>
+            <template v-slot:body-cell-edit="props">
                     <q-td key="edit" :props="props">
                         <div class="flex q-gutter-x-sm justify-center">
                             <q-icon
@@ -89,6 +82,31 @@ onMounted(() => {
                                 @click="confirm = true, selectDelNeuron = props.row"
                             />
                         </div>
+                    </q-td>
+            </template>
+            <template v-slot:body-cell-createdAt="props">
+                    <q-td key="createdAt" :props="props">
+                        <span>{{ date.formatDate(props.row.createdAt, 'DD.MM.YYYY hh:mm:ss') }}</span>
+                    </q-td>
+            </template>
+            <template v-slot:body-cell-dateEdit="props">
+                    <q-td key="dateEdit" :props="props">
+                        <span>{{ date.formatDate(props.row.dateEdit, 'DD.MM.YYYY hh:mm:ss') }}</span>
+                    </q-td>
+            </template>
+            <template
+                v-if="selectedDel.length > 0"
+                v-slot:bottom-row
+            >
+                <q-tr>
+                    <q-td colspan="100%">
+                        <q-btn
+                            push
+                            color="green"
+                            icon="delete"
+                            size="12px"
+                            @click="delSelectNeuron()"
+                        />
                     </q-td>
                 </q-tr>
             </template>

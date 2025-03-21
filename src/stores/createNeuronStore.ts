@@ -39,46 +39,46 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
     name: ''
   });
 
-  const createNeuron = ref({ ...staticCreateNeuron.value });
+  const createNeuron = ref({...staticCreateNeuron.value});
 
   const addNeuron = async () => {
     try {
-      await schema.validate(createNeuron.value, { abortEarly: false });
-      createNeuron.value.createdAt = new Date();
+        await schema.validate(createNeuron.value, { abortEarly: false });
+        createNeuron.value.createdAt = new Date();
 
-      await axios({
-        method: 'post',
-        url: 'https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons',
-        data: {
-          ...createNeuron.value
-        }
-      });
+        await axios({
+            method: 'post',
+            url: 'https://67b4cd7ea9acbdb38ed07021.mockapi.io/api/neuron/neurons',
+            data: {
+                ...createNeuron.value
+            }
+        });
 
-      clearCreated();
-      await listsNeuronStore().getRows();
+        clearCreated();
+        await listsNeuronStore().getRows();
 
-      Notify.create({
-        progress: true,
-        message: `Плитка ${createNeuron.value.name} создана`,
-        icon: 'done',
-        color: 'white',
-        textColor: 'green'
-      });
+        Notify.create({
+            progress: true,
+            message: `Плитка ${createNeuron.value.name} создана`,
+            icon: 'done',
+            color: 'white',
+            textColor: 'green'
+        });
 
     } catch (validationErrors) {
-      validationErrors.inner.forEach((err) => {
-        errors[err.path] = err.message;
-      });
+        validationErrors.inner.forEach((err) => {
+            errors[err.path] = err.message;
+        });
 
-      Notify.create({
-        progress: true,
-        message: 'Ошибки в форме заполнения',
-        icon: 'error',
-        color: 'white',
-        textColor: 'red'
-      });
+        Notify.create({
+            progress: true,
+            message: 'Ошибки в форме заполнения',
+            icon: 'error',
+            color: 'white',
+            textColor: 'red'
+        });
     }
-  };
+};
 
   const clearCreated = () => {
     createNeuron.value = staticCreateNeuron.value;
