@@ -1,12 +1,22 @@
 import axios from 'axios';
+import * as Yup from 'yup';
 
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
+import { reactive, watch,  ref } from 'vue';
+import { Notify } from 'quasar'
 
 import { listsNeuronStore } from 'stores/listsNeuronStore.js';
 
+const schema = Yup.object().shape({
+    name: Yup.string().required('Обязательное поле')
+    .min(3, 'не меньше 3-х символов')
+    .max(15, 'не больше 15ти символов'),
+    description: Yup.string().max(15, 'не больше 15ти символов'),
+});
+
 export const createNeuronStore = defineStore('createNeuronStore', () => {
     const loadData = ref(true);
+    const errors = reactive({});
     const staticCreateNeuron = ref({
         description: '',
         apiRequest: null,
@@ -25,6 +35,7 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
 
     const addNeuron = async () => {
         try {
+            await schema.validate(createNeuron.value, { abortEarly: false });
             createNeuron.value.createdAt = new Date();
 
             await axios({
@@ -37,8 +48,27 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
 
             clearCreated();
             await listsNeuronStore().getRows();
-        } catch (error) {
-            console.log(error);
+            Notify.create({
+                progress: true,
+                message: `Плитка ${createNeuron.value.name} создана`,
+                icon: 'done',
+                color: 'white',
+                textColor: 'green'
+            })
+
+        } catch (validationErrors) {
+            validationErrors.inner.forEach
+            (err => {
+                errors[err.path] = err.message;
+            });
+
+            Notify.create({
+                progress: true,
+                message: `Ошибки в форме заполнения`,
+                icon: 'error',
+                color: 'white',
+                textColor: 'red'
+            })
         }
     }
 
@@ -48,11 +78,31 @@ export const createNeuronStore = defineStore('createNeuronStore', () => {
         createNeuron.value.settings = [];
     }
 
+    const validateField = async (field) => {
+        try {
+            errors[field] = '';
+            await schema.validateAt(field, createNeuron.value);
+        } catch (err) {
+            errors[field] = err.message;
+        }
+    };
+
+    for (const key in createNeuron.value) {
+        if (key === 'name' || key === 'description') {
+            watch(() => createNeuron.value[key], () => {
+                validateField(key);
+                },
+                { immediate: true }
+            );
+        }
+    }
+
     return{
         // state
         staticCreateNeuron,
         createNeuron,
         loadData,
+        errors,
 
         //methods
         clearCreated,

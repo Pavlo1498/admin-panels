@@ -3,6 +3,7 @@ import axios from 'axios';
 import { watchEffect, ref } from 'vue';
 import { defineStore } from 'pinia';
 import { Notify } from 'quasar'
+
 import Router from 'src/router/index.js';
 
 export const editNeuronStore = defineStore('editNeuronStore', () => {
@@ -38,7 +39,10 @@ export const editNeuronStore = defineStore('editNeuronStore', () => {
     }
 
     watchEffect(() => {
-        if (editNeuron.value) thisEditNeuron.value = {...editNeuron.value}
+        if (editNeuron.value) {
+            thisEditNeuron.value = {...editNeuron.value}
+            thisEditNeuron.value.settings = [...editNeuron.value.settings]
+        }
     })
 
     return{

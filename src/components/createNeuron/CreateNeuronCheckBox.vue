@@ -30,7 +30,3 @@ const { createNeuron } = storeToRefs(createNeuronStore());
         </q-card>
     </div>
 </template>
-
-<style lang='scss' scoped>
-
-</style>

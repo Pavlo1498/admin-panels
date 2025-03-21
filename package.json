@@ -18,9 +18,11 @@
     },
     "dependencies": {
         "@quasar/extras": "^1.16.17",
+        "@vee-validate/yup": "^4.15.0",
         "axios": "^1.8.4",
         "pinia": "^3.0.1",
         "quasar": "^2.18.1",
+        "vee-validate": "^4.15.0",
         "vue": "^3.5.13",
         "vue-router": "^4.5.0"
     },
@@ -34,13 +36,13 @@
         "globals": "^16.0.0",
         "postcss": "^8.5.3",
         "prettier": "^3.5.3",
-        "vite-plugin-checker": "^0.9.1",
         "stylelint": "^16.16.0",
         "stylelint-config-recommended-vue": "^1.6.0",
         "stylelint-config-standard": "^37.0.0",
         "stylelint-config-standard-scss": "^14.0.0",
         "stylelint-order": "^6.0.4",
-        "stylelint-scss": "^6.11.1"
+        "stylelint-scss": "^6.11.1",
+        "vite-plugin-checker": "^0.9.1"
     },
     "engines": {
         "node": "^28 || ^26 || ^24 || ^22 || ^20 || ^18",

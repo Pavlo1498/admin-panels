@@ -3,6 +3,7 @@ import { computed, ref, watchEffect } from 'vue';
 import { storeToRefs } from 'pinia';
 
 import { createNeuronStore } from 'stores/createNeuronStore.js';
+import { isValid } from 'src/helpers';
 import { types } from 'src/libs/selectsLibs';
 
 const { createNeuron } = storeToRefs(createNeuronStore());
@@ -150,11 +151,14 @@ const delSetting = (index) => createNeuron.value.settings.splice(index, 1);
                         <div
                             v-for="(arr, index) in addParam.array"
                             :key="index"
-                            class="flex q-gutter-sm"
+                            class="flex q-gutter-sm q-mb-md"
                         >
                             <q-input
                                 v-model="arr.name"
                                 outlined
+                                error-message="Имя должно содержать только буквы и быть на Латинице"
+                                style="width: 200px;"
+                                :error="!isValid(arr.name)"
                                 label="Название"
                             />
                             <q-input
